@@ -94,7 +94,7 @@ var
 
 		// The jQuery object is actually just the init constructor 'enhanced'
 		// Need init if jQuery is called (just allow error to be thrown if not included)
-		return new jQuery.fn.init( selector, context );
+		return new jQuery.fn.init( selector, context );//实例jq
 	},
 
 	// Support: Android <=4.0 only
@@ -190,7 +190,8 @@ jQuery.fn = jQuery.prototype = {
 	sort: arr.sort,
 	splice: arr.splice
 };
-
+//解析代码
+///递归 拷贝
 jQuery.extend = jQuery.fn.extend = function() {
 	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[ 0 ] || {},//参数
@@ -199,11 +200,12 @@ jQuery.extend = jQuery.fn.extend = function() {
 		deep = false;
 
 	// Handle a deep copy situation
+	//处理深度拷贝
 	if ( typeof target === "boolean" ) {
 		deep = target;
 
 		// Skip the boolean and the target
-		target = arguments[ i ] || {};//i=1,从1开始跳过0
+		target = arguments[ i ] || {};//i=1,从1开始跳过0从第二个参数开始
 		i++;
 	}
 
@@ -213,23 +215,28 @@ jQuery.extend = jQuery.fn.extend = function() {
 	}
 
 	// Extend jQuery itself if only one argument is passed
-	//jQuery.extend默认
+	//jQuery.extend默认（参数只有一个）
 	if ( i === length ) {
-		target = this;
+		target = this;//jQuery.prototype 对象的this
 		i--;
 	}
 
 	for ( ; i < length; i++ ) {
 
 		// Only deal with non-null/undefined values
+        //i++ arguments 已经加1
 		if ( ( options = arguments[ i ] ) != null ) {
 
 			// Extend the base object
+			// for in 枚举属性
 			for ( name in options ) {
+                //初始对象 可能是this或 old
 				src = target[ name ];
+
 				copy = options[ name ];
 
 				// Prevent never-ending loop
+				//值一样跳过此循环
 				if ( target === copy ) {
 					continue;
 				}
@@ -237,9 +244,10 @@ jQuery.extend = jQuery.fn.extend = function() {
 				// Recurse if we're merging plain objects or arrays
 				if ( deep && copy && ( jQuery.isPlainObject( copy ) ||
 					( copyIsArray = jQuery.isArray( copy ) ) ) ) {
-
+                    //是数组 复制的值
 					if ( copyIsArray ) {
 						copyIsArray = false;
+						//原始是否存在 是否为对象
 						clone = src && jQuery.isArray( src ) ? src : [];
 
 					} else {
@@ -251,11 +259,13 @@ jQuery.extend = jQuery.fn.extend = function() {
 
 				// Don't bring in undefined values
 				} else if ( copy !== undefined ) {
-					target[ name ] = copy;
+					target[ name ] = copy;//key===》value 纯 字符串、数字
 				}
 			}
 		}
 	}
+
+	//deep?深度拷贝:覆盖拷贝
 
 	// Return the modified object
 	return target;
@@ -389,6 +399,7 @@ jQuery.extend(
 	},
 
 	// results is for internal usage only
+    //？？？？？？402
 	makeArray: function( arr, results ) {
 		var ret = results || [];
 
