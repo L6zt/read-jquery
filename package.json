@@ -1,0 +1,27 @@
+{
+  "name": "read-jquery",
+  "version": "0.0.1",
+  "description": "read Jquery",
+  "main": "jquery.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L6zt/read-jquery.git"
+  },
+  "keywords": [
+    "jqurey",
+    "think"
+  ],
+  "author": "jc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/L6zt/read-jquery/issues"
+  },
+  "homepage": "https://github.com/L6zt/read-jquery#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0"
+  }
+}

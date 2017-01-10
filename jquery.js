@@ -11,6 +11,7 @@
  *
  * Date: 2016-09-22T22:30Z
  */
+//todo this 指向运时最近的对象
 ( function( global, factory ) {
 
 	"use strict";
@@ -94,7 +95,7 @@ var
 
 		// The jQuery object is actually just the init constructor 'enhanced'
 		// Need init if jQuery is called (just allow error to be thrown if not included)
-		return new jQuery.fn.init( selector, context );//实例jq
+		return new jQuery.fn.init( selector, context );// 生成对象参数
 	},
 
 	// Support: Android <=4.0 only
@@ -109,7 +110,7 @@ var
 	fcamelCase = function( all, letter ) {
 		return letter.toUpperCase();
 	};
-
+//Jquery()实例 jQuery.fn.init()
 jQuery.fn = jQuery.prototype = {
 
 	// The current version of jQuery being used
@@ -217,7 +218,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 	// Extend jQuery itself if only one argument is passed
 	//jQuery.extend默认（参数只有一个）
 	if ( i === length ) {
-		target = this;//jQuery.prototype 对象的this
+		target = this;//jQuery函数的this todo jQuery.fn.prototype 对象
 		i--;
 	}
 
@@ -286,12 +287,13 @@ jQuery.extend(
 
 	noop: function() {},
 
+   //函数判断
 	isFunction: function( obj ) {
 		return jQuery.type( obj ) === "function";
 	},
 
 	isArray: Array.isArray,
-
+   //window 对象判断
 	isWindow: function( obj ) {
 		return obj != null && obj === obj.window;
 	},
@@ -330,13 +332,13 @@ jQuery.extend(
 		Ctor = hasOwn.call( proto, "constructor" ) && proto.constructor;
 		return typeof Ctor === "function" && fnToString.call( Ctor ) === ObjectFunctionString;
 	},
-
+   //判断数组是否空
 	isEmptyObject: function( obj ) {
 
 		/* eslint-disable no-unused-vars */
 		// See https://github.com/eslint/eslint/issues/6125
 		var name;
-
+        //name->key of obj
 		for ( name in obj ) {
 			return false;
 		}
@@ -348,6 +350,7 @@ jQuery.extend(
 			return obj + "";
 		}
 
+		//注解 class2type is question
 		// Support: Android <=2.3 only (functionish RegExp)
 		return typeof obj === "object" || typeof obj === "function" ?
 			class2type[ toString.call( obj ) ] || "object" :
@@ -363,6 +366,9 @@ jQuery.extend(
 	// Support: IE <=9 - 11, Edge 12 - 13
 	// Microsoft forgot to hump their vendor prefix (#9572)
 	camelCase: function( string ) {
+		// /^-ms-/
+		// /-([a-z])/g
+        //camelCase驼峰式大小写
 		return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
 	},
 
@@ -532,6 +538,7 @@ if ( typeof Symbol === "function" ) {
 }
 
 // Populate the class2type map
+//数组转换
 jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
 function( i, name ) {
 	class2type[ "[object " + name + "]" ] = name.toLowerCase();
@@ -2967,11 +2974,12 @@ var rootjQuery,
 	// Strict HTML recognition (#11290: must start with <)
 	// Shortcut simple #id case for speed
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
-
+//初始化
 	init = jQuery.fn.init = function( selector, context, root ) {
 		var match, elem;
 
 		// HANDLE: $(""), $(null), $(undefined), $(false)
+		//todo: this === fn.init 的实例？？？
 		if ( !selector ) {
 			return this;
 		}
@@ -3068,6 +3076,8 @@ var rootjQuery,
 	};
 
 // Give the init function the jQuery prototype for later instantiation
+	//原型指向jQuery.fn对象 todo jQuery.prototype
+	//jQuery.fn.init===jQuery.fn===jQuery.prototype
 init.prototype = jQuery.fn;
 
 // Initialize central reference
