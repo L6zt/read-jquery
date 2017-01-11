@@ -12,6 +12,7 @@
  * Date: 2016-09-22T22:30Z
  */
 //todo this 指向运时最近的对象
+//constructor 原型对象指向构造函数
 ( function( global, factory ) {
 
 	"use strict";
