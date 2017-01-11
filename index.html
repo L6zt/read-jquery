@@ -32,7 +32,74 @@
 </body>
 <script src="jquery.js"></script>
 <script>
-//    console.log("***",$);
-    console.log("$$$",$.prototype)
+    console.log("*****************step1*************** %c",'color:red');
+    // todo step 1
+    +function () {
+        //test 测试
+        var Pt={
+            constructor:Test
+        };
+        function Test() {
+            this.a=1
+        }
+        Test.prototype=Pt;
+        var objA=new Test();
+        console.log(objA.__proto__)
+    }()
+</script>
+<script>
+    console.log("*****************step2*************** %c",'color:red');
+    // todo step 2
+    +function () {
+        //test 测试
+        function Test() {
+            this.a=1
+        }
+        Test.prototype={};
+        var objA=new Test();
+        console.log(objA.__proto__)
+    }()
+</script>
+<script>
+    console.log("*****************step3*************** %c",'color:red');
+    // todo step 3
+    +function () {
+        //test 测试
+        function Test() {
+            this.a=1
+        }
+        var objA=new Test();
+        console.log(objA.__proto__)
+    }()
+</script>
+<script>
+    console.log("*****************step4*************** %c",'color:red');
+    // todo step 4
+    +function () {
+        //test 测试
+        function Test(a,b) {
+            this.a=1
+        }
+      Test.fn=Test.prototype={
+          constructor:Test
+      }
+      Test.fn.init=function () {
+          this.b=1
+      }
+      Test.fn.init.prototype=Test.fn;
+        var test=new Test.fn.init();
+        console.log(test);
+        console.log("test instanceof Test",test instanceof Test);
+        console.log("test instanceof Test.fn.init",test instanceof Test.fn.init);
+    }()
+</script>
+<script>
+    +function () {
+       var jq=$();
+       console.log(jq);
+        console.log("jq instanceof Jquery",jq instanceof jQuery);
+        console.log("jq instanceof Jquery.fn.init",jq instanceof jQuery.fn.init);
+        console.log(jq.constructor)
+    }()
 </script>
 </html>
