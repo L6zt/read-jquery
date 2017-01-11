@@ -13,6 +13,9 @@
  */
 //todo this 指向运时最近的对象
 //constructor 原型对象指向构造函数
+//nodeType 表示不同的
+
+
 ( function( global, factory ) {
 
 	"use strict";
