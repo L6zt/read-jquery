@@ -14,7 +14,7 @@
 //todo this 指向运时最近的对象
 //constructor 原型对象指向构造函数
 //nodeType 表示不同的
-
+// todo 利用别名减少代码量  xx.call ?
 
 ( function( global, factory ) {
 
@@ -379,13 +379,14 @@ jQuery.extend(
 	nodeName: function( elem, name ) {
 		return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 	},
-
+    //todo important each
 	each: function( obj, callback ) {
 		var length, i = 0;
-
+		//isArrayLike 有可能对象模拟数组或真数组
 		if ( isArrayLike( obj ) ) {
 			length = obj.length;
 			for ( ; i < length; i++ ) {
+				//回调函数 等于false终止
 				if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
 					break;
 				}
@@ -409,7 +410,7 @@ jQuery.extend(
 	},
 
 	// results is for internal usage only
-    //？？？？？？402
+
 	makeArray: function( arr, results ) {
 		var ret = results || [];
 
@@ -543,8 +544,10 @@ if ( typeof Symbol === "function" ) {
 
 // Populate the class2type map
 //数组转换
+//todo callback.call( obj[ i ], i, obj[ i ] )
 jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
 function( i, name ) {
+	console.log(name);
 	class2type[ "[object " + name + "]" ] = name.toLowerCase();
 } );
 
@@ -1125,6 +1128,7 @@ support = Sizzle.support = {};
 isXML = Sizzle.isXML = function( elem ) {
 	// documentElement is verified for cases where it doesn't yet exist
 	// (such as loading iframes in IE - #4833)
+	//todo  HTML 文档本身始终是元素的 ownerDocument
 	var documentElement = elem && (elem.ownerDocument || elem).documentElement;
 	return documentElement ? documentElement.nodeName !== "HTML" : false;
 };
@@ -8516,7 +8520,7 @@ var
 	 * 2) the catchall symbol "*" can be used
 	 * 3) selection will start with transport dataType and THEN go to "*" if needed
 	 */
-	transports = {},
+	transports = {},//传输
 
 	// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression
 	allTypes = "*/".concat( "*" ),
