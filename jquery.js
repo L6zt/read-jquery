@@ -196,7 +196,7 @@ jQuery.fn = jQuery.prototype = {
 	splice: arr.splice
 };
 //解析代码
-///递归 拷贝
+///递归 拷贝 基础函数
 jQuery.extend = jQuery.fn.extend = function() {
 	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[ 0 ] || {},//参数
@@ -923,12 +923,16 @@ function Sizzle( selector, context, results, seed ) {
  *	deleting the oldest entry
  */
 function createCache() {
+	//闭包
 	var keys = [];
 
 	function cache( key, value ) {
 		// Use (key + " ") to avoid collision with native prototype properties (see Issue #157)
+		//keys添加 元素 超过某一数量
 		if ( keys.push( key + " " ) > Expr.cacheLength ) {
-			// Only keep the most recent entries
+			// Only keep the most recent entries、
+			//keys数组清除第一个元素A
+			//删除 cache属性A
 			delete cache[ keys.shift() ];
 		}
 		return (cache[ key + " " ] = value);
