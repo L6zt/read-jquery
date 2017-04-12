@@ -24,13 +24,30 @@
 </head>
 <body>
 <p >
-
+    <input type="text" class="fuck1">
+    <input type="text" class="fuck2">
+    <p class="text"></p>
 </p>
 <p>
 
 </p>
 </body>
 <script src="jquery.js"></script>
+
+<script>
+    function check(v) {
+        v?$('.text').text('ok'):$('.text').text('not ok')
+    }
+    $('input').on('input change',function () {
+        var flag=false;
+        if($.trim($('.fuck1').val())!=''&& $.trim($('.fuck2').val())!=''){
+            flag=true
+        }
+
+        check(flag)
+
+    })
+</script>
 <script>
     console.log("*****************step1*************** %c",'color:red');
     // todo step 1

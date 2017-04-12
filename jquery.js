@@ -104,6 +104,7 @@ var
 
 	// Support: Android <=4.0 only
 	// Make sure we trim BOM and NBSP
+	//去除空白 \s->空白符 \uFEFF ->非法字符
 	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
 
 	// Matches dashed string for camelizing
@@ -10123,6 +10124,28 @@ jQuery.each( [ "top", "left" ], function( i, prop ) {
 	);
 } );
 
+
+    // each: function( obj, callback ) {
+    //     var length, i = 0;
+    //     //isArrayLike 有可能对象模拟数组或真数组
+    //     if ( isArrayLike( obj ) ) {
+    //         length = obj.length;
+    //         for ( ; i < length; i++ ) {
+    //             //回调函数 等于false终止
+    //             if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+    //                 break;
+    //             }
+    //         }
+    //     } else {
+    //         for ( i in obj ) {
+    //             if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //
+    //     return obj;
+    // }
 
 // Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
