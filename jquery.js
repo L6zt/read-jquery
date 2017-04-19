@@ -3331,7 +3331,9 @@ jQuery.Callbacks = function( options ) {
 
 			// Execute callbacks for all pending executions,
 			// respecting firingIndex overrides and runtime changes
+			//运行标志
 			fired = firing = true;
+			//queue 关键队列
 			for ( ; queue.length; firingIndex = -1 ) {
 				memory = queue.shift();
 				while ( ++firingIndex < list.length ) {
@@ -3339,7 +3341,7 @@ jQuery.Callbacks = function( options ) {
 					// Run callback and check for early termination
 					if ( list[ firingIndex ].apply( memory[ 0 ], memory[ 1 ] ) === false &&
 						options.stopOnFalse ) {
-
+                         //回调函数返回false或options.停止标志存在结束
 						// Jump to end and forget the data so .add doesn't re-fire
 						firingIndex = list.length;
 						memory = false;
@@ -3348,6 +3350,7 @@ jQuery.Callbacks = function( options ) {
 			}
 
 			// Forget the data if we're done with it
+			//memory false 就是 false
 			if ( !options.memory ) {
 				memory = false;
 			}
@@ -3373,10 +3376,12 @@ jQuery.Callbacks = function( options ) {
 
 			// Add a callback or a collection of callbacks to the list
 			add: function() {
+				 //检查list 是否有效
 				if ( list ) {
 
 					// If we have memory from a past run, we should fire after adding
 					if ( memory && !firing ) {
+						//重置firingIndex为 list end
 						firingIndex = list.length - 1;
 						queue.push( memory );
 					}
@@ -3384,17 +3389,19 @@ jQuery.Callbacks = function( options ) {
 					( function add( args ) {
 						jQuery.each( args, function( _, arg ) {
 							if ( jQuery.isFunction( arg ) ) {
+								  //检查函数是否唯一
 								if ( !options.unique || !self.has( arg ) ) {
 									list.push( arg );
 								}
 							} else if ( arg && arg.length && jQuery.type( arg ) !== "string" ) {
-
+								//递归函数
 								// Inspect recursively
 								add( arg );
 							}
 						} );
 					} )( arguments );
-
+                    //立即调用函数
+					//memory 为 undefined
 					if ( memory && !firing ) {
 						fire();
 					}
@@ -3407,9 +3414,11 @@ jQuery.Callbacks = function( options ) {
 				jQuery.each( arguments, function( _, arg ) {
 					var index;
 					while ( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
+						//splice 删除数组元素即函数
 						list.splice( index, 1 );
 
 						// Handle firing indexes
+						//处理 已触发标志
 						if ( index <= firingIndex ) {
 							firingIndex--;
 						}
@@ -3500,7 +3509,6 @@ function adoptValue( value, resolve, reject ) {
 	var method;
 
 	try {
-
 		// Check for promise aspect first to privilege synchronous behavior
 		if ( value && jQuery.isFunction( ( method = value.promise ) ) ) {
 			method.call( value ).done( resolve ).fail( reject );
@@ -3594,7 +3602,6 @@ jQuery.extend( {
 								args = arguments,
 								mightThrow = function() {
 									var returned, then;
-
 									// Support: Promises/A+ section 2.3.3.3.3
 									// https://promisesaplus.com/#point-59
 									// Ignore double-resolution attempts
