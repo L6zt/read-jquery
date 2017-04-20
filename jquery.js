@@ -3350,7 +3350,7 @@ jQuery.Callbacks = function( options ) {
 			}
 
 			// Forget the data if we're done with it
-			//memory false 就是 false
+			//memory 不存在 就是 false
 			if ( !options.memory ) {
 				memory = false;
 			}
@@ -3358,8 +3358,9 @@ jQuery.Callbacks = function( options ) {
 			firing = false;
 
 			// Clean up if we're done firing for good
+			// 如果锁存在
 			if ( locked ) {
-
+                 //记忆存在
 				// Keep an empty list if we have data for future add calls
 				if ( memory ) {
 					list = [];
@@ -3385,7 +3386,7 @@ jQuery.Callbacks = function( options ) {
 						firingIndex = list.length - 1;
 						queue.push( memory );
 					}
-
+                //初始化 是不会调用上下的 判断语句并且没有fire
 					( function add( args ) {
 						jQuery.each( args, function( _, arg ) {
 							if ( jQuery.isFunction( arg ) ) {
@@ -3402,6 +3403,9 @@ jQuery.Callbacks = function( options ) {
 					} )( arguments );
                     //立即调用函数
 					//memory 为 undefined
+
+
+
 					if ( memory && !firing ) {
 						fire();
 					}
@@ -3825,7 +3829,7 @@ jQuery.extend( {
 		// All done!
 		return deferred;
 	},
-
+     //function.call(thisArg, arg1, arg2, ...)
 	// Deferred helper
 	when: function( singleValue ) {
 		var
