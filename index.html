@@ -140,8 +140,25 @@ console.log("*****************step6*************** %c",'color:red');
  }
  var a={};
  console.log(a===zt(a));
-
-
 }(window)
+</script>
+
+<script>
+    +function () {
+        var k=$.Deferred(function (df) {
+            console.log(df)
+            df.resolve(234)
+            console.log(df.state())
+        }).done(function (data) {
+            console.log(data)
+        }).done(function (data) {
+            console.log(data)
+        })
+        k.resolve(2222);
+        k.done(function (data) {
+            console.log(1,data)
+        })
+       console.log( k.state())
+    }()
 </script>
 </html>
