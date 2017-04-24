@@ -144,21 +144,28 @@ console.log("*****************step6*************** %c",'color:red');
 </script>
 
 <script>
+     console.log($.Deferred());
     +function () {
         var k=$.Deferred(function (df) {
             console.log(df)
-            df.resolve(234)
+            setTimeout(function () {
+                console.log(new Date())
+                df.resolve(234)
+            },2000)
+//            df.resolve(987)
             console.log(df.state())
-        }).done(function (data) {
+        }).then(function (data) {
             console.log(data)
-        }).done(function (data) {
+            return $.Deferred(function (df) {
+                setTimeout(function () {
+                    df.resolve('kill')
+                },2000)
+            })
+        }).then(function (data) {
+            console.log(new Date())
             console.log(data)
         })
-        k.resolve(2222);
-        k.done(function (data) {
-            console.log(1,data)
-        })
-       console.log( k.state())
+
     }()
 </script>
 </html>

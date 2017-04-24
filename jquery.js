@@ -3548,14 +3548,17 @@ jQuery.extend( {
 				// action, add listener, callbacks,
 				// ... .then handlers, argument index, [final state]
 				[ "notify", "progress", jQuery.Callbacks( "memory" ),
+				//解析状态
 					jQuery.Callbacks( "memory" ), 2 ],
 				[ "resolve", "done", jQuery.Callbacks( "once memory" ),
 					jQuery.Callbacks( "once memory" ), 0, "resolved" ],
+				//拒绝状态
 				[ "reject", "fail", jQuery.Callbacks( "once memory" ),
 					jQuery.Callbacks( "once memory" ), 1, "rejected" ]
 			],
 			state = "pending",
 			promise = {
+			// 当前状态
 				state: function() {
 					return state;
 				},
@@ -3563,6 +3566,7 @@ jQuery.extend( {
 					deferred.done( arguments ).fail( arguments );
 					return this;
 				},
+				//处理错误
 				"catch": function( fn ) {
 					return promise.then( null, fn );
 				},
@@ -3598,6 +3602,7 @@ jQuery.extend( {
 						fns = null;
 					} ).promise();
 				},
+				//处理
 				then: function( onFulfilled, onRejected, onProgress ) {
 					var maxDepth = 0;
 					function resolve( depth, deferred, handler, special ) {
@@ -3612,7 +3617,7 @@ jQuery.extend( {
 									if ( depth < maxDepth ) {
 										return;
 									}
-
+                                    // handler => onfialfilled
 									returned = handler.apply( that, args );
 
 									// Support: Promises/A+ section 2.3.1
@@ -3655,8 +3660,7 @@ jQuery.extend( {
 												returned,
 												resolve( maxDepth, deferred, Identity, special ),
 												resolve( maxDepth, deferred, Thrower, special ),
-												resolve( maxDepth, deferred, Identity,
-													deferred.notifyWith )
+												resolve( maxDepth, deferred, Identity, deferred.notifyWith )
 											);
 										}
 
@@ -3723,7 +3727,7 @@ jQuery.extend( {
 							}
 						};
 					}
-
+                   //func.call( deferred, deferred );
 					return jQuery.Deferred( function( newDefer ) {
 
 						// progress_handlers.add( ... )
