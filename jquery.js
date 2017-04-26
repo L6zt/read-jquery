@@ -3607,6 +3607,7 @@ jQuery.extend( {
 					var maxDepth = 0;
 					function resolve( depth, deferred, handler, special ) {
 						return function() {
+							console.log(this)
 							var that = this,
 								args = arguments,
 								mightThrow = function() {
@@ -3684,6 +3685,7 @@ jQuery.extend( {
 								process = special ?
 									mightThrow :
 									function() {
+
 										try {
 											mightThrow();
 										} catch ( e ) {
@@ -3728,9 +3730,12 @@ jQuery.extend( {
 						};
 					}
                    //func.call( deferred, deferred );
+
+					//newDefer
 					return jQuery.Deferred( function( newDefer ) {
 
 						// progress_handlers.add( ... )
+						//原deffer参数
 						tuples[ 0 ][ 3 ].add(
 							resolve(
 								0,
