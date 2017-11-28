@@ -147,7 +147,7 @@ console.log("*****************step6*************** %c",'color:red');
      console.log($.Deferred());
     +function () {
         var k=$.Deferred(function (df) {
-            console.log(df)
+            console.log('this', this)
             setTimeout(function () {
                 console.log(new Date())
                 df.resolve(234)

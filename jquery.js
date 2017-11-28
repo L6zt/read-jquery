@@ -3577,7 +3577,7 @@ jQuery.extend( {
 
 					return jQuery.Deferred( function( newDefer ) {
 						jQuery.each( tuples, function( i, tuple ) {
-
+							// item 0 -> resolve item reject 1 -> reject 2 ->nottify
 							// Map tuples (progress, done, fail) to arguments (done, fail, progress)
 							var fn = jQuery.isFunction( fns[ tuple[ 4 ] ] ) && fns[ tuple[ 4 ] ];
 
@@ -3607,7 +3607,6 @@ jQuery.extend( {
 					var maxDepth = 0;
 					function resolve( depth, deferred, handler, special ) {
 						return function() {
-							console.log(this)
 							var that = this,
 								args = arguments,
 								mightThrow = function() {
@@ -3781,15 +3780,28 @@ jQuery.extend( {
 
 		// Add list-specific methods
 		jQuery.each( tuples, function( i, tuple ) {
+			/*
+			var tuples = [
+				[ "notify", "progress", jQuery.Callbacks( "memory" ),
+				//解析状态
+					jQuery.Callbacks( "memory" ), 2 ],
+				[ "resolve", "done", jQuery.Callbacks( "once memory" ),
+					jQuery.Callbacks( "once memory" ), 0, "resolved" ],
+				//拒绝状态
+				[ "reject", "fail", jQuery.Callbacks( "once memory" ),
+					jQuery.Callbacks( "once memory" ), 1, "rejected" ]
+			]
+			*/
+
 			var list = tuple[ 2 ],
-				stateString = tuple[ 5 ];
+				stateString = tuple[ 5 ];// undefined resolve reject
 
 			// promise.progress = list.add
 			// promise.done = list.add
 			// promise.fail = list.add
-			promise[ tuple[ 1 ] ] = list.add;
+			promise[ tuple[ 1 ] ] = list.add; //
 
-			// Handle state
+			// Handle state 排除progress 状态
 			if ( stateString ) {
 				list.add(
 					function() {
@@ -3801,6 +3813,8 @@ jQuery.extend( {
 
 					// rejected_callbacks.disable
 					// fulfilled_callbacks.disable
+					// i = 1  reslove resject
+					// i = 2 resject reslove 
 					tuples[ 3 - i ][ 2 ].disable,
 
 					// progress_callbacks.lock
@@ -3817,6 +3831,7 @@ jQuery.extend( {
 			// deferred.resolve = function() { deferred.resolveWith(...) }
 			// deferred.reject = function() { deferred.rejectWith(...) }
 			deferred[ tuple[ 0 ] ] = function() {
+				// 内容区 context 上下文 // arguments 参数
 				deferred[ tuple[ 0 ] + "With" ]( this === deferred ? undefined : this, arguments );
 				return this;
 			};
@@ -3824,14 +3839,17 @@ jQuery.extend( {
 			// deferred.notifyWith = list.fireWith
 			// deferred.resolveWith = list.fireWith
 			// deferred.rejectWith = list.fireWith
+			// $.callback函数 回调
 			deferred[ tuple[ 0 ] + "With" ] = list.fireWith;
 		} );
 
 		// Make the deferred a promise
+		// 与promise 融合
 		promise.promise( deferred );
 
 		// Call given func if any
 		if ( func ) {
+			// deferred 上下文
 			func.call( deferred, deferred );
 		}
 
@@ -5732,7 +5750,7 @@ function cloneCopyEvent( src, dest ) {
 		}
 	}
 
-	// 2. Copy user data
+	// 2. Copy user dataf
 	if ( dataUser.hasData( src ) ) {
 		udataOld = dataUser.access( src );
 		udataCur = jQuery.extend( {}, udataOld );
@@ -7076,11 +7094,13 @@ function Animation( elem, properties, options ) {
 				return false;
 			}
 			var currentTime = fxNow || createFxNow(),
+				// 开始时间 --- 延迟时间 -- 当前时间 ====》 剩余时间
 				remaining = Math.max( 0, animation.startTime + animation.duration - currentTime ),
 
 				// Support: Android 2.3 only
 				// Archaic crash bug won't allow us to use `1 - ( 0.5 || 0 )` (#12497)
 				temp = remaining / animation.duration || 0,
+				// 动画剩余百分比
 				percent = 1 - temp,
 				index = 0,
 				length = animation.tweens.length;
