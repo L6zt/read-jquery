@@ -3379,7 +3379,7 @@ jQuery.Callbacks = function( options ) {
 			add: function() {
 				 //检查list 是否有效
 				if ( list ) {
-
+					// 如果我们有 运行记录， 增加列表后就执行		
 					// If we have memory from a past run, we should fire after adding
 					if ( memory && !firing ) {
 						//重置firingIndex为 list end
@@ -3604,11 +3604,12 @@ jQuery.extend( {
 				},
 				//处理
 				then: function( onFulfilled, onRejected, onProgress ) {
+					// onFulfilled, onRejected, onProgress a 成功回调函数 b 拒绝回调函数 
 					var maxDepth = 0;
 					function resolve( depth, deferred, handler, special ) {
 						return function() {
-							var that = this,
-								args = arguments,
+							var that = this, // 当前上下文
+								args = arguments, // 函数参数
 								mightThrow = function() {
 									var returned, then;
 									// Support: Promises/A+ section 2.3.3.3.3
@@ -3617,7 +3618,7 @@ jQuery.extend( {
 									if ( depth < maxDepth ) {
 										return;
 									}
-                                    // handler => onfialfilled
+                                    // handler => onfialfilled 处理函数
 									returned = handler.apply( that, args );
 
 									// Support: Promises/A+ section 2.3.1
@@ -3735,6 +3736,7 @@ jQuery.extend( {
 
 						// progress_handlers.add( ... )
 						//原deffer参数
+						// tuples 当前作用于
 						tuples[ 0 ][ 3 ].add(
 							resolve(
 								0,
@@ -3813,7 +3815,7 @@ jQuery.extend( {
 
 					// rejected_callbacks.disable
 					// fulfilled_callbacks.disable
-					// i = 1  reslove resject
+					// i = 1  reslove resject+
 					// i = 2 resject reslove 
 					tuples[ 3 - i ][ 2 ].disable,
 
